@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PC | TIS</title>
+    <title>PC | ระบบสารสนเทศครูผู้สอน</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.css">
@@ -18,10 +18,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
 
-    <script src="https://www.google.com/recaptcha/api.js?render=6LdBJaYrAAAAAF82Cs7qFC4-6rUBXW4bdRSMT5cX"></script>
-
     <style>
-        /* --- GENERAL STYLES --- */
         :root {
             --header-height: 3.5rem;
             --sidebar-width: 256px;
@@ -36,264 +33,673 @@
         body {
             font-family: var(--body-font);
             font-size: var(--normal-font-size);
-            background-color: #f0f2f5;
+            background-color: #f8f9fa;
         }
-
-        /* --- LOGIN VIEW STYLES --- */
-        #login-view {
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            background-color: var(--white-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+            z-index: 100;
+        }
+        .header__container {
             display: flex;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
+            justify-content: space-between;
+            height: 100%;
+            padding: 0 1.5rem;
         }
-        .login-card {
+        .header__left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .header__logo {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            color: var(--dark-color);
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .header__logo i {
+            font-size: 1.5rem;
+            color: var(--first-color);
+        }
+        .header__user {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            cursor: pointer;
+        }
+        .header__user-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .header__user-img img {
             width: 100%;
-            max-width: 400px;
-            padding: 2rem;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            background-color: #ffffff;
-            border-radius: 12px;
-            border-top: 5px solid var(--first-color);
+            height: 100%;
+            object-fit: cover;
         }
-        .login-header { text-align: center; margin-bottom: 1.5rem; }
-        .login-header i { font-size: 3rem; color: var(--first-color); }
-        .login-header h2 { margin-top: 1rem; font-weight: 700; }
-        .form-floating > .form-control:focus ~ label { color: var(--first-color); }
-        #loginButton.btn-primary { background-color: var(--first-color); border-color: var(--first-color); font-weight: 700; padding: 0.75rem; }
-        .recaptcha-notice { font-size: 0.75rem; color: var(--dark-color-alt); text-align: center; margin-top: 1.5rem; }
-        #error-message { display: none; font-size: 0.9rem; }
-
-        /* --- APP VIEW STYLES --- */
-        #app-view {
-             background-color: #f8f9fa;
+        .header__user-info h3 {
+            font-size: var(--normal-font-size);
+            margin: 0;
+            font-weight: 600;
         }
-        .header { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); background-color: var(--white-color); box-shadow: 0 2px 4px rgba(0, 0, 0, .1); z-index: 100; }
-        .header__container { display: flex; align-items: center; justify-content: space-between; height: 100%; padding: 0 1.5rem; }
-        .header__left { display: flex; align-items: center; gap: 1rem; }
-        .header__logo { display: flex; align-items: center; gap: .5rem; color: var(--dark-color); font-weight: 700; text-decoration: none; }
-        .header__logo i { font-size: 1.5rem; color: var(--first-color); }
-        .header__user { display: flex; align-items: center; gap: .75rem; cursor: pointer; }
-        .header__user-img { width: 40px; height: 40px; border-radius: 50%; overflow: hidden; }
-        .header__user-img img { width: 100%; height: 100%; object-fit: cover; }
-        .header__user-info h3 { font-size: var(--normal-font-size); margin: 0; font-weight: 600; }
-        .header__user-info span { font-size: .8rem; color: var(--dark-color-alt); }
-        .header__toggle, .sidebar__toggle { font-size: 1.5rem; cursor: pointer; background: none; border: none; color: var(--dark-color); }
-        .sidebar { position: fixed; top: 0; left: -100%; width: var(--sidebar-width); height: 100%; background-color: var(--white-color); box-shadow: 4px 0 8px rgba(0, 0, 0, .1); padding: 1.5rem; transition: left .4s; z-index: 101; overflow-y: auto; }
-        .sidebar__container { display: flex; flex-direction: column; justify-content: space-between; min-height: 100%; }
-        .sidebar__header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid var(--first-color-alt); }
-        .sidebar__logo { display: flex; align-items: center; gap: .75rem; color: var(--dark-color); font-weight: 700; text-decoration: none; }
-        .sidebar__logo i { font-size: 1.5rem; color: var(--first-color); }
-        .sidebar__toggle { color: var(--dark-color-alt); }
-        .sidebar__toggle:hover { color: var(--first-color); }
-        .sidebar__title { font-size: .8rem; margin: 1.5rem 0 .5rem; color: var(--dark-color-alt); text-transform: uppercase; }
-        .sidebar__link { display: flex; align-items: center; gap: .75rem; padding: .75rem; border-radius: .25rem; color: var(--dark-color); text-decoration: none; transition: background-color .3s, color .3s; }
-        .sidebar__link i { font-size: 1.25rem; }
-        .sidebar__link:hover, .active-link { background-color: var(--first-color); color: var(--white-color); }
-        .sidebar .nav-link { padding: .75rem; color: var(--dark-color); display: flex; align-items: center; gap: .75rem; }
-        .sidebar .nav-link:hover { background-color: var(--first-color); color: var(--white-color); border-radius: .25rem; }
-        .sidebar .nav-link .fa-chevron-down { margin-left: auto; transition: transform 0.3s; }
-        .sidebar .nav-link[aria-expanded="true"] .fa-chevron-down { transform: rotate(180deg); }
-        .sidebar .nav-link[aria-expanded="true"] { background-color: var(--first-color); color: var(--white-color); border-radius: .25rem; }
-        .sidebar .collapse .sidebar__link { padding-left: 2.5rem; }
-        .show-sidebar { left: 0; }
-        .main { padding-top: calc(var(--header-height) + 1rem); padding-left: 1.5rem; padding-right: 1.5rem; transition: padding-left .4s; width: 100%; height: 100vh; overflow-y: auto; }
-        .body-pd { padding-left: calc(var(--sidebar-width) + 1.5rem); }
+        .header__user-info span {
+            font-size: .8rem;
+            color: var(--dark-color-alt);
+        }
+        .header__toggle, .sidebar__toggle {
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--dark-color);
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: var(--sidebar-width);
+            height: 100%;
+            background-color: var(--white-color);
+            box-shadow: 4px 0 8px rgba(0, 0, 0, .1);
+            padding: 1.5rem;
+            transition: left .4s;
+            z-index: 101;
+            overflow-y: auto;
+        }
+        .sidebar__container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100%;
+        }
+        .sidebar__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--first-color-alt);
+        }
+        .sidebar__logo {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            color: var(--dark-color);
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .sidebar__logo i {
+            font-size: 1.5rem;
+            color: var(--first-color);
+        }
+        .sidebar__toggle {
+            color: var(--dark-color-alt);
+        }
+        .sidebar__toggle:hover {
+            color: var(--first-color);
+        }
+        .sidebar__title {
+            font-size: .8rem;
+            margin: 1.5rem 0 .5rem;
+            color: var(--dark-color-alt);
+            text-transform: uppercase;
+        }
+        .sidebar__link {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            padding: .75rem;
+            border-radius: .25rem;
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: background-color .3s, color .3s;
+        }
+        .sidebar__link i {
+            font-size: 1.25rem;
+        }
+        .sidebar__link:hover, .active-link {
+            background-color: var(--first-color);
+            color: var(--white-color);
+        }
+        .sidebar .nav-link {
+            padding: .75rem;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+        }
+        .sidebar .nav-link:hover {
+            background-color: var(--first-color);
+            color: var(--white-color);
+            border-radius: .25rem;
+        }
+        .sidebar .nav-link .fa-chevron-down {
+            margin-left: auto;
+            transition: transform 0.3s;
+        }
+        .sidebar .nav-link[aria-expanded="true"] .fa-chevron-down {
+            transform: rotate(180deg);
+        }
+        .sidebar .nav-link[aria-expanded="true"] {
+             background-color: var(--first-color);
+             color: var(--white-color);
+             border-radius: .25rem;
+        }
+        .sidebar .collapse .sidebar__link {
+            padding-left: 2.5rem;
+        }
+        .show-sidebar {
+            left: 0;
+        }
+        .main {
+            padding-top: calc(var(--header-height) + 1rem);
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            transition: padding-left .4s;
+            width: 100%;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .body-pd {
+            padding-left: calc(var(--sidebar-width) + 1.5rem);
+        }
         .page { display: none; }
         .page.active { display: block; }
-        .container { width: 100%; max-width: 100%; margin: 0; background-color: #ffffff; padding: 20px 40px 40px 40px; border-radius: 16px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: var(--first-color); margin-bottom: 25px; font-size: 18px; font-weight: 700; }
-        h2, legend { text-align: left; color: var(--first-color); margin-bottom: 25px; font-size: 18px; font-weight: 700; }
+        .container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            background-color: #ffffff;
+            padding: 20px 40px 40px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #0d6efd;
+            margin-bottom: 25px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        h2, legend {
+            text-align: left;
+            color: #0d6efd;
+            margin-bottom: 25px;
+            font-size: 18px;
+            font-weight: 700;
+        }
         legend { padding: 0; margin-left: 0; }
-        .photo-section { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; }
-        .photo-preview, .profile-photo { width: 150px; height: 150px; border: 3px dashed var(--first-color); border-radius: 50%; margin-top: 15px; object-fit: cover; padding: 5px; background-color: #f8f9fa; }
-        .file-preview { display: none; max-width: 100%; max-height: 200px; margin-top: 10px; border: 1px solid #ddd; padding: 5px; }
+        .photo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .photo-preview, .profile-photo {
+            width: 150px;
+            height: 150px;
+            border: 3px dashed #0d6efd;
+            border-radius: 50%;
+            margin-top: 15px;
+            object-fit: cover;
+            padding: 5px;
+            background-color: #f8f9fa;
+        }
+        .file-preview {
+             display: none;
+             max-width: 100%;
+             max-height: 200px;
+             margin-top: 10px;
+             border: 1px solid #ddd;
+             padding: 5px;
+        }
         .photo-preview { display: none; }
-        fieldset { border: 1px solid #dee2e6; border-radius: 8px; padding: 25px; margin-bottom: 25px; }
-        .form-grid, .profile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .address-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+        fieldset {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        .form-grid, .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .address-grid {
+             display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
         .form-group { display: flex; flex-direction: column; }
-        label { margin-bottom: 8px; font-weight: bold; color: #495057; font-size: 1em; display: flex; align-items: center; gap: 8px; }
-        .fa-fw, .profile-item i { color: var(--first-color); }
-        input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select, textarea { padding: 12px; border: 1px solid #ced4da; border-radius: 6px; font-size: 1em; font-family: 'Sarabun', sans-serif; width: 100%; box-sizing: border-box; }
+        label {
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #495057;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .fa-fw, .profile-item i { color: #0d6efd; }
+        input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select, textarea {
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 1em;
+            font-family: 'Sarabun', sans-serif;
+            width: 100%;
+            box-sizing: border-box;
+        }
         input[readonly] { background-color: #e9ecef; }
         .input-group-text { cursor: pointer; }
-        .profile-item { background-color: #f8f9fa; padding: 12px; border-radius: 6px; border: 1px solid #e9ecef; }
-        .profile-item-label { font-weight: bold; color: var(--dark-color-alt); font-size: 0.9em; margin-bottom: 4px; }
+        .profile-item {
+            background-color: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+        .profile-item-label {
+            font-weight: bold;
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-bottom: 4px;
+        }
         .profile-item-value { font-size: 1.1em; }
-        #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.8); z-index: 9999; display: flex; justify-content: center; align-items: center; }
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         #loading-overlay img { width: 150px; }
-        .user-dropdown-menu { width: 340px; padding: 1.5rem; text-align: center; border: 1px solid #dee2e6; box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15); }
-        .user-dropdown-menu .dropdown-user-img { width: 90px; height: 90px; object-fit: cover; border-radius: 50%; margin-bottom: 0.5rem; border: 3px solid var(--first-color-alt); }
-        .user-dropdown-menu .greeting { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .user-dropdown-menu .email { font-size: 0.9rem; color: var(--dark-color-alt); margin-bottom: 1rem; }
-        .user-dropdown-menu .btn-manage-account { border: 1px solid #dee2e6; color: #3c4043; font-weight: 500; padding: 8px 16px; width: 100%; margin-bottom: 1rem; text-decoration: none; display: inline-block; }
-        .user-dropdown-menu .btn-logout { border: 1px solid #dee2e6; width: 100%; text-decoration: none; }
-        .user-dropdown-menu .footer-links { margin-top: 1.5rem; font-size: 0.8rem; color: var(--dark-color-alt); }
-        #signature-pad { border: 1px solid #ced4da; border-radius: 6px; cursor: crosshair; background-color: #ffffff; }
-        .signature-pad-footer { margin-top: 10px; text-align: right; }
-        #leaveSummaryTable th, #leaveSummaryTable td, #leaveTable th, #leaveTable td, #studentListTable th, #studentListTable td, #curriculumTable th, #curriculumTable td, #lessonPlanTable th, #lessonPlanTable td, #researchTable th, #researchTable td, #teachingScheduleTable th, #teachingScheduleTable td, #pp5Table th, #pp5Table td { text-align: center; vertical-align: middle; }
+        #leaveSummaryTable th, #leaveSummaryTable td,
+        #leaveTable th, #leaveTable td,
+        #studentListTable th, #studentListTable td,
+        #curriculumTable th, #curriculumTable td,
+        #lessonPlanTable th, #lessonPlanTable td,
+        #researchTable th, #researchTable td,
+        #teachingScheduleTable th, #teachingScheduleTable td,
+        #pp5Table th, #pp5Table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .user-dropdown-menu {
+            width: 340px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid #dee2e6;
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+        }
+        .user-dropdown-menu .dropdown-user-img {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 0.5rem;
+            border: 3px solid var(--first-color-alt);
+        }
+        .user-dropdown-menu .greeting {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .user-dropdown-menu .email {
+            font-size: 0.9rem;
+            color: var(--dark-color-alt);
+            margin-bottom: 1rem;
+        }
+        .user-dropdown-menu .btn-manage-account {
+            border: 1px solid #dee2e6;
+            color: #3c4043;
+            font-weight: 500;
+            padding: 8px 16px;
+            width: 100%;
+            margin-bottom: 1rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .user-dropdown-menu .btn-logout {
+            border: 1px solid #dee2e6;
+            width: 100%;
+            text-decoration: none;
+        }
+        .user-dropdown-menu .footer-links {
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+             color: var(--dark-color-alt);
+        }
+        #signature-pad {
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            cursor: crosshair;
+            background-color: #ffffff;
+        }
+        .signature-pad-footer {
+            margin-top: 10px;
+            text-align: right;
+        }
     </style>
 </head>
-<body>
-
-    <div id="login-view">
-        <div class="login-card">
-            <div class="login-header">
-                <i class="fas fa-users-cog"></i>
-                <h2>PC | TIS</h2>
-                <p class="text-muted">ระบบสารสนเทศครูผู้สอน</p>
-            </div>
-            
-            <form id="loginForm">
-                <div class="alert alert-danger" id="error-message" role="alert"></div>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="username" placeholder="Username" required>
-                    <label for="username"><i class="fas fa-user me-2"></i>ชื่อผู้ใช้</label>
-                </div>
-                <div class="form-floating mb-4">
-                    <input type="password" class="form-control" id="password" placeholder="Password" required>
-                    <label for="password"><i class="fas fa-lock me-2"></i>รหัสผ่าน</label>
-                </div>
-                <button type="submit" class="btn btn-primary w-100" id="loginButton">
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
-                    เข้าสู่ระบบ
+<body id="body-pd">
+    <header class="header" id="header">
+        <div class="header__container">
+            <div class="header__left">
+                <button class="header__toggle" id="header-toggle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="เมนูเปิด/ปิด">
+                    <i class="fas fa-bars"></i>
                 </button>
-            </form>
+                <a href="#" class="header__logo" data-bs-toggle="tooltip" data-bs-placement="bottom" title="หน้าหลัก">
+                    <i class="fas fa-users-cog"></i>
+                    <span>PC | TIS</span>
+                </a>
+            </div>
             
-            <div class="recaptcha-notice">
-                This site is protected by reCAPTCHA and the Google
-                <a href="https://policies.google.com/privacy">Privacy Policy</a> and
-                <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+            <div class="dropdown">
+                <a href="#" class="header__user dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-toggle="tooltip" data-bs-placement="bottom" title="โปรไฟล์ผู้ใช้">
+                     <div class="header__user-img">
+                        <img src="https://placehold.co/100x100/e9ecef/6c757d?text=_" alt="User Avatar" id="navbar-user-img">
+                    </div>
+                    <div class="header__user-info">
+                        <h3 id="navbar-user-name">ผู้ใช้งาน</h3>
+                        <span id="navbar-user-detail">กลุ่มสาระฯ</span>
+                    </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end user-dropdown-menu">
+                    <p class="email" id="dropdown-user-email">email@example.com</p>
+                    <img src="https://placehold.co/150x150/e9ecef/6c757d?text=_" alt="User Avatar" id="dropdown-user-img" class="dropdown-user-img">
+                    <h3 class="greeting" id="dropdown-user-greeting">สวัสดี, คุณ</h3>
+                    <a href="#settings-page" id="manage-account-link" class="btn btn-manage-account">จัดการบัญชี</a>
+                    <a href="#" id="logout-button" class="btn btn-logout"><i class="fas fa-sign-out-alt me-2"></i>ออกจากระบบ</a>
+                     <div class="footer-links" id="custom-footer">
+                        ออกแบบพัฒนาระบบโดย KT | Tanasarn Sirak
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar__container">
+            <div>
+                <div class="sidebar__header">
+                    <a href="#" class="sidebar__logo">
+                        <i class="fas fa-users-cog"></i>
+                        <span>PC | TIS</span>
+                    </a>
+                    <button class="sidebar__toggle" id="sidebar-close" data-bs-toggle="tooltip" data-bs-placement="right" title="ปิดเมนู">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                </div>
+                <div class="sidebar__content">
+                     <div class="nav flex-column">
+                        <h3 class="sidebar__title">เมนูหลัก</h3>
+                        <a class="nav-link" data-bs-toggle="collapse" href="#personal-info-collapse" role="button" aria-expanded="false" aria-controls="personal-info-collapse">
+                            <i class="fas fa-user-circle"></i> <span>ข้อมูลส่วนตัว</span> <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="collapse" id="personal-info-collapse">
+                            <div class="sidebar__list">
+                                <a href="#profile-page" class="sidebar__link active-link">
+                                    <i class="fas fa-user"></i>
+                                    <span>ประวัติส่วนตัว</span>
+                                </a>
+                                <a href="#training-page" class="sidebar__link">
+                                    <i class="fas fa-award"></i>
+                                    <span>ประวัติการฝึกอบรม</span>
+                                </a>
+                                <a href="#decoration-page" class="sidebar__link">
+                                    <i class="fas fa-medal"></i>
+                                    <span>เครื่องราชฯ</span>
+                                </a>
+                                <a href="#leave-page" class="sidebar__link">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>การลาและสถิติการลา</span>
+                                </a>
+                                <a href="#award-page" class="sidebar__link">
+                                    <i class="fas fa-trophy"></i>
+                                    <span>ผลงาน/รางวัล</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <a class="nav-link" data-bs-toggle="collapse" href="#teaching-info-collapse" role="button" aria-expanded="false" aria-controls="teaching-info-collapse">
+                            <i class="fas fa-chalkboard-teacher"></i> <span>งานสอน</span> <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="collapse" id="teaching-info-collapse">
+                            <div class="sidebar__list">
+                                <a href="#curriculum-page" class="sidebar__link"><i class="fas fa-book-open"></i> <span>หลักสูตร</span></a>
+                                <a href="#lesson-plan-page" class="sidebar__link"><i class="fas fa-clipboard-list"></i> <span>แผนการสอน</span></a>
+                                <a href="#research-page" class="sidebar__link"><i class="fas fa-flask"></i> <span>วิจัยในชั้นเรียน</span></a>
+                                <a href="#pp5-page" class="sidebar__link"><i class="fas fa-file-alt"></i> <span>PP5</span></a>
+                            </div>
+                        </div>
+                        
+                        <div class="sidebar__list">
+                             <a href="#academic-calendar-page" class="sidebar__link">
+                                <i class="fas fa-calendar-day"></i>
+                                <span>ปฏิทินวิชาการ</span>
+                            </a>
+                            <a href="#download-orders-page" class="sidebar__link">
+                                <i class="fas fa-download"></i>
+                                <span>ดาวน์โหลดคำสั่ง</span>
+                            </a>
+                            <a href="#teaching-schedule-page" class="sidebar__link">
+                                <i class="fas fa-table-list"></i>
+                                <span>ตารางสอน</span>
+                            </a>
+                             <a href="#student-list-page" class="sidebar__link">
+                                <i class="fas fa-users"></i>
+                                <span>รายชื่อนักเรียน</span>
+                            </a>
+                            <a href="#settings-page" class="sidebar__link">
+                                <i class="fas fa-cog"></i>
+                                <span>ตั้งค่า</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main" id="main">
+        <div id="profile-page" class="page active">
+            <div class="container">
+                <h1>ประวัติส่วนตัว</h1>
+                 <div class="text-center mb-4">
+                    <img id="profile-photo" class="profile-photo" src="https://placehold.co/150x150/e9ecef/6c757d?text=Photo" alt="Profile Photo">
+                </div>
+                <fieldset>
+                    <legend>ข้อมูลส่วนตัว</legend>
+                    <div class="profile-grid">
+                        <div class="profile-item"><div class="profile-item-label">รหัสประจำตัว</div><div id="profile-idCode" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">ชื่อ-สกุล</div><div id="profile-fullName" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">ชื่อเล่น</div><div id="profile-nickname" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">วันเดือนปีเกิด</div><div id="profile-dob" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">อายุ</div><div id="profile-age" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">หมู่โลหิต</div><div id="profile-bloodType" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">เบอร์โทรศัพท์</div><div id="profile-phone" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">E-mail</div><div id="profile-email" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">ID Line</div><div id="profile-lineId" class="profile-item-value">-</div></div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>ที่อยู่ปัจจุบัน</legend>
+                     <div class="profile-item"><div class="profile-item-label">ที่อยู่</div><div id="profile-address" class="profile-item-value">-</div></div>
+                </fieldset>
+                <fieldset>
+                    <legend>วุฒิการศึกษา</legend>
+                     <div class="profile-grid">
+                        <div class="profile-item"><div class="profile-item-label">ปริญญาตรี</div><div id="profile-bachelorDegree" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">ปริญญาโท</div><div id="profile-masterDegree" class="profile-item-value">-</div></div>
+                    </div>
+                </fieldset>
+                 <fieldset>
+                    <legend>ข้อมูลบัตรประจำตัวประชาชน</legend>
+                     <div class="profile-grid">
+                        <div class="profile-item"><div class="profile-item-label">เลขที่บัตร</div><div id="profile-idCardNumber" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">วันที่ออกบัตร</div><div id="profile-idCardIssueDate" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">วันหมดอายุ</div><div id="profile-idCardExpiryDate" class="profile-item-value">-</div></div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>ข้อมูลใบอนุญาตประกอบวิชาชีพ</legend>
+                     <div class="profile-grid">
+                        <div class="profile-item"><div class="profile-item-label">เลขที่ใบอนุญาต</div><div id="profile-licenseNumber" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">วันที่ออกใบอนุญาต</div><div id="profile-licenseIssueDate" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">วันหมดอายุ</div><div id="profile-licenseExpiryDate" class="profile-item-value">-</div></div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>ข้อมูลการจ้างงาน</legend>
+                     <div class="profile-grid">
+                        <div class="profile-item"><div class="profile-item-label">วันที่บรรจุ</div><div id="profile-hireDate" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">วันที่เกษียณอายุ</div><div id="profile-retirementDate" class="profile-item-value">-</div></div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>ข้อมูลการปฏิบัติงาน</legend>
+                     <div class="profile-grid">
+                        <div class="profile-item"><div class="profile-item-label">ตำแหน่งปัจจุบัน</div><div id="profile-currentPosition" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">เลขที่ตำแหน่ง</div><div id="profile-positionNumber" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">อันดับ</div><div id="profile-rank" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">กลุ่มสาระการเรียนรู้</div><div id="profile-learningSubject" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">สาขาวิชา</div><div id="profile-major" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">อัตราเงินเดือน</div><div id="profile-salary" class="profile-item-value">-</div></div>
+                        <div class="profile-item"><div class="profile-item-label">เงินวิทยฐานะ</div><div id="profile-academicStandingPay" class="profile-item-value">-</div></div>
+                    </div>
+                </fieldset>
+                <div class="text-center mt-4">
+                    <button type="button" id="edit-button" class="btn btn-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#formModal">
+                        <i class="fas fa-edit me-2"></i>แก้ไขข้อมูล
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="training-page" class="page">
+            <div class="container">
+                <h1>ประวัติการฝึกอบรม</h1>
+                <div class="d-flex justify-content-end mb-3">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#trainingModal" data-bs-toggle="tooltip" title="เพิ่มข้อมูลการอบรมใหม่">
+                        <i class="fas fa-plus"></i> เพิ่มข้อมูลการอบรม
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table id="trainingTable" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>วันที่อบรม</th>
+                                <th>หลักสูตร</th>
+                                <th>สถานที่</th>
+                                <th>หน่วยงานที่จัด</th>
+                                <th>ไฟล์เกียรติบัตร</th>
+                                <th>จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="decoration-page" class="page">
+            </div>
+        
+        <div id="leave-page" class="page">
+            </div>
+
+        <div id="award-page" class="page">
+            </div>
+
+        <div id="settings-page" class="page">
+            </div>
+        
+        <div id="academic-calendar-page" class="page">
+            </div>
+        
+        <div id="download-orders-page" class="page">
+            </div>
+        
+        <div id="teaching-schedule-page" class="page">
+            </div>
+        
+        <div id="student-list-page" class="page">
+            </div>
+        
+        <div id="curriculum-page" class="page">
+            </div>
+
+        <div id="lesson-plan-page" class="page">
+            </div>
+
+        <div id="research-page" class="page">
+            </div>
+
+        <div id="pp5-page" class="page">
+            </div>
+    </main>
+
+    <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.15);">
+                <div class="modal-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-users-cog fa-3x text-primary"></i>
+                        <h2 class="mt-3 fw-bold">PC | TIS</h2>
+                        <p class="text-muted">ระบบสารสนเทศครูผู้สอน</p>
+                    </div>
+                    <form id="loginForm">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="username" placeholder="Username" required>
+                            <label for="username"><i class="fas fa-user me-2"></i>ชื่อผู้ใช้</label>
+                        </div>
+                        <div class="form-floating mb-4">
+                            <input type="password" class="form-control" id="password" placeholder="Password" required>
+                            <label for="password"><i class="fas fa-lock me-2"></i>รหัสผ่าน</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold"><i class="fas fa-sign-in-alt me-2"></i>เข้าสู่ระบบ</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="app-view" style="display: none;">
-        <div id="body-pd"> <header class="header" id="header">
-                <div class="header__container">
-                    <div class="header__left">
-                        <button class="header__toggle" id="header-toggle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="เมนูเปิด/ปิด">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                        <a href="#" class="header__logo" data-bs-toggle="tooltip" data-bs-placement="bottom" title="หน้าหลัก">
-                            <i class="fas fa-users-cog"></i>
-                            <span>PC | TIS</span>
-                        </a>
-                    </div>
-                    
-                    <div class="dropdown">
-                        <a href="#" class="header__user dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-toggle="tooltip" data-bs-placement="bottom" title="โปรไฟล์ผู้ใช้">
-                             <div class="header__user-img">
-                                <img src="https://placehold.co/100x100/e9ecef/6c757d?text=_" alt="User Avatar" id="navbar-user-img">
-                            </div>
-                            <div class="header__user-info">
-                                <h3 id="navbar-user-name">ผู้ใช้งาน</h3>
-                                <span id="navbar-user-detail">กลุ่มสาระฯ</span>
-                            </div>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end user-dropdown-menu">
-                            <p class="email" id="dropdown-user-email">email@example.com</p>
-                            <img src="https://placehold.co/150x150/e9ecef/6c757d?text=_" alt="User Avatar" id="dropdown-user-img" class="dropdown-user-img">
-                            <h3 class="greeting" id="dropdown-user-greeting">สวัสดี, คุณ</h3>
-                            <a href="#settings-page" id="manage-account-link" class="btn btn-manage-account">จัดการบัญชี</a>
-                            <a href="#" class="btn btn-logout" id="logout-button"><i class="fas fa-sign-out-alt me-2"></i>ออกจากระบบ</a>
-                             <div class="footer-links" id="custom-footer">
-                                ออกแบบพัฒนาระบบโดย KT | Tanasarn Sirak
-                            </div>
-                        </div>
-                    </div>
+    <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="formModalLabel">แก้ไขข้อมูลส่วนตัว</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </header>
-
-            <nav class="sidebar" id="sidebar">
-                <div class="sidebar__container">
-                    <div>
-                        <div class="sidebar__header">
-                            <a href="#" class="sidebar__logo">
-                                <i class="fas fa-users-cog"></i>
-                                <span>PC | TIS</span>
-                            </a>
-                            <button class="sidebar__toggle" id="sidebar-close" data-bs-toggle="tooltip" data-bs-placement="right" title="ปิดเมนู">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar__content">
-                             <div class="nav flex-column">
-                                <h3 class="sidebar__title">เมนูหลัก</h3>
-                                <a class="nav-link" data-bs-toggle="collapse" href="#personal-info-collapse" role="button" aria-expanded="false" aria-controls="personal-info-collapse">
-                                    <i class="fas fa-user-circle"></i> <span>ข้อมูลส่วนตัว</span> <i class="fas fa-chevron-down"></i>
-                                </a>
-                                <div class="collapse" id="personal-info-collapse">
-                                    <div class="sidebar__list">
-                                        <a href="#profile-page" class="sidebar__link active-link">
-                                            <i class="fas fa-user"></i>
-                                            <span>ประวัติส่วนตัว</span>
-                                        </a>
-                                        <a href="#training-page" class="sidebar__link">
-                                            <i class="fas fa-award"></i>
-                                            <span>ประวัติการฝึกอบรม</span>
-                                        </a>
-                                        <a href="#decoration-page" class="sidebar__link">
-                                            <i class="fas fa-medal"></i>
-                                            <span>เครื่องราชฯ</span>
-                                        </a>
-                                        <a href="#leave-page" class="sidebar__link">
-                                            <i class="fas fa-calendar-alt"></i>
-                                            <span>การลาและสถิติการลา</span>
-                                        </a>
-                                        <a href="#award-page" class="sidebar__link">
-                                            <i class="fas fa-trophy"></i>
-                                            <span>ผลงาน/รางวัล</span>
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <a class="nav-link" data-bs-toggle="collapse" href="#teaching-info-collapse" role="button" aria-expanded="false" aria-controls="teaching-info-collapse">
-                                    <i class="fas fa-chalkboard-teacher"></i> <span>งานสอน</span> <i class="fas fa-chevron-down"></i>
-                                </a>
-                                <div class="collapse" id="teaching-info-collapse">
-                                    <div class="sidebar__list">
-                                        <a href="#curriculum-page" class="sidebar__link"><i class="fas fa-book-open"></i> <span>หลักสูตร</span></a>
-                                        <a href="#lesson-plan-page" class="sidebar__link"><i class="fas fa-clipboard-list"></i> <span>แผนการสอน</span></a>
-                                        <a href="#research-page" class="sidebar__link"><i class="fas fa-flask"></i> <span>วิจัยในชั้นเรียน</span></a>
-                                        <a href="#pp5-page" class="sidebar__link"><i class="fas fa-file-alt"></i> <span>PP5</span></a>
-                                    </div>
-                                </div>
-                                
-                                <div class="sidebar__list">
-                                     <a href="#academic-calendar-page" class="sidebar__link">
-                                        <i class="fas fa-calendar-day"></i>
-                                        <span>ปฏิทินวิชาการ</span>
-                                    </a>
-                                    <a href="#download-orders-page" class="sidebar__link">
-                                        <i class="fas fa-download"></i>
-                                        <span>ดาวน์โหลดคำสั่ง</span>
-                                    </a>
-                                    <a href="#teaching-schedule-page" class="sidebar__link">
-                                        <i class="fas fa-table-list"></i>
-                                        <span>ตารางสอน</span>
-                                    </a>
-                                     <a href="#student-list-page" class="sidebar__link">
-                                        <i class="fas fa-users"></i>
-                                        <span>รายชื่อนักเรียน</span>
-                                    </a>
-                               <a href="#settings-page" class="sidebar__link">
-                                        <i class="fas fa-cog"></i>
-                                        <span>ตั้งค่า</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="modal-body">
+                    <form id="employeeForm" class="needs-validation" novalidate>
+                        </form>
                 </div>
-            </nav>
-
-            <main class="main" id="main">
-                <div id="profile-page" class="page active">
-                    </div>
-                </main>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" id="save-button" class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i>บันทึกข้อมูล
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
+    
+    <div class="modal fade" id="trainingModal" tabindex="-1" aria-labelledby="trainingModalLabel" aria-hidden="true">
+        </div>
 
     <div id="loading-overlay" style="display: none;">
         <img src="https://media1.giphy.com/media/mBMdeZHp6bqfkL4vBI/giphy.gif" alt="Loading...">
@@ -303,9 +709,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.th.min.js"></script>
-    <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/JQL.min.js"></script>
-    <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/typeahead.bundle.js"></script>
-    <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.js"></script>
+    <script src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/JQL.min.js"></script>
+    <script src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/typeahead.bundle.js"></script>
+    <script src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
@@ -314,205 +720,209 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/th.js'></script>
 
-
     <script>
-    // =========================================================================
-    // COMBINED SCRIPT LOGIC
-    // =========================================================================
+        /*=============== GLOBAL DATA STORE ===============*/
+        let employeeData = {}; 
+        let trainingData = [], trainingTable;
+        let decorationData = [], decorationTable;
+        let leaveData = [], leaveTable;
+        let leaveSummaryData = [{ year: 2025, sick: 0, personal: 0, maternity: 0, ordination: 0, absent: 0, late: 0 }], leaveSummaryTable;
+        let awardData = [], awardTable;
+        let academicCalendarData = [], academicCalendarTable, calendar;
+        let ordersTable;
+        let studentListData = [], studentListTable;
+        let teachingScheduleData = [], teachingScheduleTable;
+        let curriculumData = [], curriculumTable;
+        let lessonPlanData = [], lessonPlanTable;
+        let researchData = [], researchTable;
+        let pp5Data = [], pp5Table;
+        
+        const recaptchaScript = document.createElement('script');
+        recaptchaScript.src = 'https://www.google.com/recaptcha/api.js?render=6LdBJaYrAAAAAF82Cs7qFC4-6rUBXW4bdRSMT5cX';
+        document.head.appendChild(recaptchaScript);
 
-    // --- GLOBAL CONFIGURATION ---
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxsdC_XxGngusNLvzXybEcCvyyVQ8cubKYvOhqwx4YHMdEOCDkAwgMIhDn-9jnYeJHjLw/exec';
-    const RECAPTCHA_SITE_KEY = '6LdBJaYrAAAAAF82Cs7qFC4-6rUBXW4bdRSMT5cX';
-    
-    // --- VIEW SELECTORS ---
-    const loginView = $('#login-view');
-    const appView = $('#app-view');
-    const loginForm = $('#loginForm');
-    const loginButton = $('#loginButton');
-    const spinner = loginButton.find('.spinner-border');
-    const errorMessage = $('#error-message');
+        /*=============== CORE APPLICATION LOGIC ===============*/
+        $(document).ready(function() {
+            const userData = JSON.parse(sessionStorage.getItem('userData'));
+            const loginModalEl = document.getElementById('loginModal');
+            const loginModal = new bootstrap.Modal(loginModalEl);
 
-    // --- AUTHENTICATION AND VIEW MANAGEMENT ---
+            if (!userData) {
+                loginModal.show();
+                $('#loginForm').on('submit', function(e) {
+                    e.preventDefault();
+                    handleLoginAttempt(loginModal);
+                });
+            } else {
+                setupUserData(userData);
+                initializeApp();
+            }
+        });
 
-    /**
-     * Toggles between the login view and the main application view.
-     * @param {boolean} showApp - If true, shows the app; otherwise, shows the login screen.
-     */
-    function showMainApplication(showApp) {
-        if (showApp) {
-            loginView.hide();
-            appView.show();
-            // Initialize the main application's scripts
-            initializeApp();
-        } else {
-            appView.hide();
-            loginView.show();
-        }
-    }
+        function handleLoginAttempt(loginModalInstance) {
+            const username = $('#username').val();
+            const password = $('#password').val();
 
-    // --- LOGIN FORM LOGIC ---
-    loginForm.on('submit', (e) => {
-        e.preventDefault();
-        setLoading(true);
+            Swal.fire({
+                title: 'กำลังตรวจสอบข้อมูล...',
+                text: 'กรุณารอสักครู่',
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            });
 
-        grecaptcha.ready(function() {
-            grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'login' }).then(function(token) {
-                const username = $('#username').val();
-                const password = $('#password').val();
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6LdBJaYrAAAAAF82Cs7qFC4-6rUBXW4bdRSMT5cX', {action: 'login'}).then(function(token) {
+                    const webappUrl = 'https://script.google.com/macros/s/AKfycbxsdC_XxGngusNLvzXybEcCvyyVQ8cubKYvOhqwx4YHMdEOCDkAwgMIhDn-9jnYeJHjLw/exec';
+                    const payload = {
+                        username: username,
+                        password: password,
+                        recaptcha_token: token,
+                        action: 'login'
+                    };
 
-                const payload = {
-                    action: 'login',
-                    user: username,
-                    pass: password,
-                    token: token
-                };
-
-                fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(payload),
-                    headers: { 'Content-Type': 'application/json' }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        sessionStorage.setItem('loggedInUser', JSON.stringify(data.user));
-                        showMainApplication(true);
-                    } else {
-                        showError(data.message || 'An unknown error occurred.');
-                        setLoading(false);
-                    }
-                })
-                .catch(error => {
-                    showError('Could not connect to the server. Please try again.');
-                    setLoading(false);
+                    $.ajax({
+                        url: webappUrl,
+                        method: 'POST',
+                        dataType: 'json',
+                        data: payload,
+                        success: function(response) {
+                            if (response.result === 'success') {
+                                sessionStorage.setItem('userData', JSON.stringify(response.data));
+                                setupUserData(response.data);
+                                
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'เข้าสู่ระบบสำเร็จ!',
+                                    timer: 1500,
+                                    showConfirmButton: false
+                                }).then(() => {
+                                    loginModalInstance.hide();
+                                    initializeApp();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'เกิดข้อผิดพลาด',
+                                    text: response.message || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'
+                                });
+                            }
+                        },
+                        error: () => Swal.fire({ icon: 'error', title: 'การเชื่อมต่อล้มเหลว' })
+                    });
                 });
             });
-        });
-    });
-
-    function setLoading(isLoading) {
-        spinner.toggle(isLoading);
-        loginButton.prop('disabled', isLoading);
-    }
-
-    function showError(message) {
-        errorMessage.text(message).show();
-    }
-
-    // --- MAIN APPLICATION SCRIPT (INITIALIZED AFTER LOGIN) ---
-    
-    let isAppInitialized = false;
-
-    function initializeApp() {
-        if (isAppInitialized) return; // Prevent re-initialization
-
-        const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-        if (!loggedInUser) {
-            showMainApplication(false);
-            return;
         }
 
-        // --- All the original script logic from HTML - v6.html goes here ---
-
-        logAction('Initialized application session.');
-        initializeUserSession(loggedInUser);
-        
-        // ... (The entire original script from the previous response) ...
-        // This includes all DataTable initializations, modal logic, datepickers, etc.
-        // I will paste the core functions here for context.
-
-        showLoadingOverlay();
-        populateProfilePage(loggedInUser);
-
-        // All the event listeners and functions from your original v6 file
-        // e.g., showSidebar, colorLink, previewImage, calculateAge, etc.
-        // DataTable initializations for trainingTable, decorationTable, etc.
-
-        isAppInitialized = true;
-        hideLoadingOverlay();
-    }
-    
-    
-    // =========================================================================
-    //  HELPER FUNCTIONS (SHARED ACROSS LOGIN & APP)
-    // =========================================================================
-
-    /**
-     * Sends a log entry to the backend Google Apps Script.
-     */
-    function logAction(details) {
-        const user = JSON.parse(sessionStorage.getItem('loggedInUser'));
-        if (!user) return;
-
-        const payload = {
-            action: 'log',
-            fullName: user.fullName,
-            details: details
-        };
-        fetch(SCRIPT_URL, {
-            method: 'POST',
-            body: JSON.stringify(payload),
-            headers: { 'Content-Type': 'application/json' }
-        }).catch(error => console.error('Logging failed:', error));
-    }
-
-
-    // =========================================================================
-    //  APP-SPECIFIC FUNCTIONS (Adapted from original file)
-    // =========================================================================
-    
-    // NOTE: This is a sample of functions. The full script from the previous step should be here.
-    function initializeUserSession(user) {
-        // This function now takes the user object as an argument
-        const defaultImage = 'https://placehold.co/150x150/e9ecef/6c757d?text=_';
-        const userImage = user.image || defaultImage;
-
-        $('#navbar-user-img').attr('src', userImage);
-        $('#navbar-user-name').text(user.fullName);
-        $('#navbar-user-detail').text(user.role);
-        
-        $('#dropdown-user-img').attr('src', userImage);
-        $('#dropdown-user-email').text(user.email);
-        $('#dropdown-user-greeting').text(`สวัสดี, ${user.fullName}`);
-
-        applyRolePermissions(user.role);
-
-        $('#logout-button').on('click', function(e) {
-            e.preventDefault();
-            logAction('Logged out.');
-            sessionStorage.removeItem('loggedInUser');
-            // Instead of redirecting, just show the login view
-            showMainApplication(false);
-            // Optionally reload the page to reset the state completely
-            window.location.reload(); 
-        });
-    }
-
-    function applyRolePermissions(role) {
-        // (Same RBAC function as the previous response)
-    }
-
-    function populateProfilePage(user) {
-        // (Same populate profile page function)
-        // You would adapt it to use the `user` object passed in.
-    }
-
-
-    // --- INITIAL PAGE LOAD CHECK ---
-    $(document).ready(function() {
-        const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-        if (loggedInUser) {
-            showMainApplication(true);
-        } else {
-            showMainApplication(false);
+        function setupUserData(userData) {
+            employeeData = {
+                idCode: userData.username || 'N/A',
+                photo: userData.image || 'https://placehold.co/150x150/e9ecef/6c757d?text=_',
+                firstName: userData.fullName ? userData.fullName.split(' ')[0] : 'ผู้ใช้',
+                lastName: userData.fullName ? userData.fullName.split(' ').slice(1).join(' ') : 'งาน',
+                email: userData.email || 'N/A',
+                learningSubject: userData.direct || 'กลุ่มสาระฯ'
+            };
         }
-    });
 
-    // =========================================================================
-    // THE REST OF YOUR ORIGINAL `HTML - v6.html` JAVASCRIPT GOES HERE
-    // (Ensure it's placed inside the `initializeApp` function to run after login)
-    // =========================================================================
+        function initializeApp() {
+            showLoadingOverlay();
+            populateProfilePage(); 
 
+            $('#logout-button').on('click', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'ต้องการออกจากระบบ?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'ใช่, ออกจากระบบ',
+                    cancelButtonText: 'ยกเลิก'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        sessionStorage.removeItem('userData');
+                        location.reload();
+                    }
+                });
+            });
+            
+            ;(function($){
+                $.fn.datepicker.dates['th-th'] = $.fn.datepicker.dates['th'];
+                var DPGlobal = $.fn.datepicker.DPGlobal;
+                DPGlobal.formatDate = function (date, format, language) {
+                    if (/th-th/.test(language)) {
+                        var y = date.getFullYear() + 543;
+                        format = format.replace(/yyyy/g, y);
+                    }
+                    return $.fn.datepicker.DPGlobal.oldFormatDate.call(this, date, format, language);
+                };
+                DPGlobal.parseDate = function (dateStr, format, language) {
+                    if (/th-th/.test(language) && dateStr) {
+                        var arr = dateStr.split(format.separator);
+                        var y_index = format.parts.indexOf('yyyy');
+                        if (y_index > -1 && arr[y_index] && arr[y_index].length === 4) {
+                            arr[y_index] = parseInt(arr[y_index]) - 543;
+                            dateStr = arr.join(format.separator);
+                        }
+                    }
+                    return $.fn.datepicker.DPGlobal.oldParseDate.call(this, dateStr, format, language);
+                };
+                $.fn.datepicker.DPGlobal.oldFormatDate = $.fn.datepicker.DPGlobal.formatDate;
+                $.fn.datepicker.DPGlobal.oldParseDate = $.fn.datepicker.DPGlobal.parseDate;
+            }(jQuery));
+            
+            function showLoadingOverlay() { $('#loading-overlay').show(); }
+            function hideLoadingOverlay() { $('#loading-overlay').hide(); }
+            
+            const showSidebar = (toggleId, sidebarId, bodyId) =>{
+                const toggle = document.getElementById(toggleId),
+                sidebar = document.getElementById(sidebarId),
+                bodypd = document.getElementById(bodyId);
+                if(toggle && sidebar){
+                    toggle.addEventListener('click', ()=>{
+                        sidebar.classList.toggle('show-sidebar');
+                        bodypd.classList.toggle('body-pd');
+                    });
+                }
+            };
+            showSidebar('header-toggle','sidebar', 'body-pd');
+
+            const sidebarClose = document.getElementById('sidebar-close');
+            if(sidebarClose) {
+                sidebarClose.addEventListener('click', () => {
+                    document.getElementById('sidebar').classList.remove('show-sidebar');
+                    document.getElementById('body-pd').classList.remove('body-pd');
+                });
+            }
+            
+            const linkColor = document.querySelectorAll('.sidebar__link');
+            function colorLink(){
+                linkColor.forEach(l=> l.classList.remove('active-link'));
+                this.classList.add('active-link');
+                const targetPageId = this.getAttribute('href').substring(1);
+                document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+                const targetPage = document.getElementById(targetPageId);
+                if (targetPage) { targetPage.classList.add('active'); }
+            }
+            linkColor.forEach(l=> l.addEventListener('click', colorLink));
+
+            function populateProfilePage() {
+                const fullName = `${employeeData.firstName} ${employeeData.lastName}`;
+                $('#navbar-user-img').attr('src', employeeData.photo);
+                $('#navbar-user-name').text(fullName);
+                $('#navbar-user-detail').text(employeeData.learningSubject);
+                $('#dropdown-user-img').attr('src', employeeData.photo);
+                $('#dropdown-user-email').text(employeeData.email);
+                $('#dropdown-user-greeting').text(`สวัสดี, คุณ ${employeeData.firstName}`);
+                $('#profile-photo').attr('src', employeeData.photo);
+                $('#profile-idCode').text(employeeData.idCode);
+                $('#profile-fullName').text(fullName);
+                $('#profile-email').text(employeeData.email);
+                $('#profile-learningSubject').text(employeeData.learningSubject);
+            }
+            
+            setTimeout(() => {
+                hideLoadingOverlay();
+            }, 500);
+        } 
     </script>
 </body>
 </html>
