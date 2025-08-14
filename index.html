@@ -1163,9 +1163,542 @@
             </div>
         </div>
     </div>
-    
     <div class="modal fade" id="trainingModal" tabindex="-1" aria-labelledby="trainingModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="trainingModalLabel">เพิ่ม/แก้ไขข้อมูลการอบรม</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="trainingForm" class="needs-validation" novalidate>
+                <input type="hidden" id="training-id">
+                 <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="training-employee-id" class="form-label">รหัสประจำตัว</label>
+                        <input type="text" id="training-employee-id" class="form-control" readonly>
+                    </div>
+                    <div class="col-md-8">
+                        <label for="training-employee-name" class="form-label">ชื่อ-สกุล</label>
+                        <input type="text" id="training-employee-name" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="trainingDate" class="form-label">วันที่อบรม</label>
+                    <div class="input-group">
+                        <input type="text" id="trainingDate" class="form-control datepicker" required placeholder="เลือกวันที่">
+                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="trainingCourse" class="form-label">หลักสูตร</label>
+                    <input type="text" class="form-control" id="trainingCourse" required>
+                    <div class="invalid-feedback">กรุณากรอกชื่อหลักสูตร</div>
+                </div>
+                <div class="mb-3">
+                    <label for="trainingLocation" class="form-label">สถานที่</label>
+                    <input type="text" class="form-control" id="trainingLocation" required>
+                     <div class="invalid-feedback">กรุณากรอกสถานที่</div>
+                </div>
+                <div class="mb-3">
+                    <label for="trainingOrganizer" class="form-label">หน่วยงานที่จัด</label>
+                    <input type="text" class="form-control" id="trainingOrganizer" required>
+                    <div class="invalid-feedback">กรุณากรอกหน่วยงานที่จัด</div>
+                </div>
+                <div class="mb-3">
+                    <label for="trainingCertificate" class="form-label">ไฟล์เกียรติบัตร (Image/PDF)</label>
+                    <input class="form-control" type="file" id="trainingCertificate" accept="image/*,application/pdf" onchange="previewImage(event, 'training-certificate-preview')">
+                    <img id="training-certificate-preview" class="file-preview" src="#" alt="แสดงตัวอย่างไฟล์">
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="button" class="btn btn-primary" id="save-training-button">บันทึก</button>
+          </div>
         </div>
+      </div>
+    </div>
+    <div class="modal fade" id="decorationModal" tabindex="-1" aria-labelledby="decorationModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="decorationModalLabel">เพิ่ม/แก้ไขข้อมูลเครื่องราชฯ</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="decorationForm" class="needs-validation" novalidate>
+                <input type="hidden" id="decoration-id">
+                 <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="decoration-employee-id" class="form-label">รหัสประจำตัว</label>
+                        <input type="text" id="decoration-employee-id" class="form-control" readonly>
+                    </div>
+                    <div class="col-md-8">
+                        <label for="decoration-employee-name" class="form-label">ชื่อ-สกุล</label>
+                        <input type="text" id="decoration-employee-name" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="decorationDate" class="form-label">วันที่ได้รับ</label>
+                        <div class="input-group">
+                           <input type="text" id="decorationDate" class="form-control datepicker" required placeholder="เลือกวันที่">
+                           <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="decorationName" class="form-label">เครื่องราชฯ/เหรียญตรา</label>
+                        <input type="text" class="form-control" id="decorationName" required>
+                        <div class="invalid-feedback">กรุณากรอกชื่อเครื่องราชฯ/เหรียญตรา</div>
+                    </div>
+                </div>
+                 <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label for="decorationOrder" class="form-label">ลำดับที่</label>
+                        <input type="text" class="form-control" id="decorationOrder">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="decorationBook" class="form-label">เล่มที่</label>
+                        <input type="text" class="form-control" id="decorationBook">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="decorationPart" class="form-label">ตอนที่</label>
+                        <input type="text" class="form-control" id="decorationPart">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="decorationPage" class="form-label">หน้า</label>
+                        <input type="text" class="form-control" id="decorationPage">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="decorationAnnounceDate" class="form-label">วันที่ประกาศ</label>
+                     <div class="input-group">
+                        <input type="text" id="decorationAnnounceDate" class="form-control datepicker" required placeholder="เลือกวันที่">
+                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                    </div>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="button" class="btn btn-primary" id="save-decoration-button">บันทึก</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="leaveModal" tabindex="-1" aria-labelledby="leaveModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="leaveModalLabel">ยื่นใบลา</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="leaveForm" class="needs-validation" novalidate>
+                 <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="leave-employee-id" class="form-label">รหัสประจำตัว</label>
+                        <input type="text" id="leave-employee-id" class="form-control" readonly>
+                    </div>
+                    <div class="col-md-8">
+                        <label for="leave-employee-name" class="form-label">ชื่อ-สกุล</label>
+                        <input type="text" id="leave-employee-name" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="leaveFiscalYear" class="form-label">ปีงบประมาณ</label>
+                        <input type="number" class="form-control" id="leaveFiscalYear" placeholder="เช่น 2567" required>
+                        <div class="invalid-feedback">กรุณากรอกปีงบประมาณ</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="leaveType" class="form-label">ประเภทการลา</label>
+                        <select id="leaveType" class="form-select" required>
+                            <option value="" selected>เลือกประเภท...</option>
+                            <option>ลาป่วย</option>
+                            <option>ลากิจส่วนตัว</option>
+                            <option>ลาคลอดบุตร</option>
+                            <option>ลาช่วยภรรยาคลอดบุตร</option>
+                            <option>ลาอุปสมบท</option>
+                            <option>ลาศึกษาต่อ</option>
+                            <option>ลาศึกษาดูงาน</option>
+                        </select>
+                        <div class="invalid-feedback">กรุณาเลือกประเภทการลา</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="leaveReason" class="form-label">เหตุผลการลา</label>
+                    <textarea class="form-control" id="leaveReason" rows="3" required></textarea>
+                    <div class="invalid-feedback">กรุณากรอกเหตุผลการลา</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="leaveStartDate" class="form-label">ตั้งแต่วันที่</label>
+                        <div class="input-group">
+                           <input type="text" id="leaveStartDate" class="form-control datepicker" required placeholder="เลือกวันที่">
+                           <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="leaveEndDate" class="form-label">ถึงวันที่</label>
+                        <div class="input-group">
+                           <input type="text" id="leaveEndDate" class="form-control datepicker" required placeholder="เลือกวันที่">
+                           <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="leaveDays" class="form-label">จำนวนวันลาครั้งนี้</label>
+                        <input type="text" id="leaveDays" readonly class="form-control">
+                    </div>
+                </div>
+                 <div class="mb-3">
+                    <label for="leaveContact" class="form-label">เบอร์โทรติดต่อ</label>
+                    <input type="tel" class="form-control" id="leaveContact" required>
+                     <div class="invalid-feedback">กรุณากรอกเบอร์โทรติดต่อ</div>
+                </div>
+                <div class="mb-3">
+                    <label for="leaveStatus" class="form-label">สถานะ</label>
+                    <input type="text" class="form-control" id="leaveStatus" value="รออนุมัติ" readonly>
+                </div>
+                <fieldset class="border p-3 mb-3">
+                    <legend class="fs-6 w-auto">ที่อยู่ระหว่างลา</legend>
+                    <div class="address-grid">
+                        <div class="form-group"><label for="leave_address_number">บ้านเลขที่</label><input type="text" id="leave_address_number" class="form-control"></div>
+                        <div class="form-group"><label for="leave_address_moo">หมู่ที่</label><input type="text" id="leave_address_moo" class="form-control"></div>
+                        <div class="form-group"><label for="leave_subdistrict">ตำบล</label><input type="text" id="leave_subdistrict" class="form-control"></div>
+                        <div class="form-group"><label for="leave_district">อำเภอ</label><input type="text" id="leave_district" class="form-control"></div>
+                        <div class="form-group"><label for="leave_province">จังหวัด</label><input type="text" id="leave_province" class="form-control"></div>
+                        <div class="form-group"><label for="leave_zipcode">รหัสไปรษณีย์</label><input type="text" id="leave_zipcode" class="form-control"></div>
+                    </div>
+                </fieldset>
+                <fieldset class="border p-3">
+                    <legend class="fs-6 w-auto">ลายมือชื่อผู้ยื่นใบลา</legend>
+					<div class="signature-pad-footer text-center">
+                    <canvas id="signature-pad" width="400" height="200"></canvas>
+					</div>
+					<div class="text-center">
+                    <button type="button" class="btn btn-secondary btn-sm" id="clear-signature">ล้างลายเซ็น</button>
+                    </div>
+                </fieldset>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="button" class="btn btn-primary" id="save-leave-button">ยื่นใบลา</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="awardModal" tabindex="-1" aria-labelledby="awardModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="awardModalLabel">เพิ่ม/แก้ไขข้อมูลผลงาน/รางวัล</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="awardForm" class="needs-validation" novalidate>
+                <input type="hidden" id="award-id">
+                 <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="award-employee-id" class="form-label">รหัสประจำตัว</label>
+                        <input type="text" id="award-employee-id" class="form-control" readonly>
+                    </div>
+                    <div class="col-md-8">
+                        <label for="award-employee-name" class="form-label">ชื่อ-สกุล</label>
+                        <input type="text" id="award-employee-name" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="awardYear" class="form-label">ปี</label>
+                        <input type="number" class="form-control" id="awardYear" placeholder="เช่น 2567" required>
+                        <div class="invalid-feedback">กรุณากรอกปี</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="awardType" class="form-label">ประเภทผลงาน</label>
+                        <select id="awardType" class="form-select" required>
+                            <option value="" selected>เลือกประเภท...</option>
+                            <option>ครู</option>
+                            <option>นักเรียน</option>
+                            <option>ผู้บริหาร</option>
+                            <option>สถานศึกษา</option>
+                        </select>
+                         <div class="invalid-feedback">กรุณาเลือกประเภทผลงาน</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="awardName" class="form-label">ชื่อ สกุล</label>
+                    <div id="awardNameContainer">
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control award-name-input" required>
+                             <div class="invalid-feedback">กรุณากรอกชื่อ-สกุล</div>
+                            <button class="btn btn-outline-success" type="button" id="addAwardName"><i class="fas fa-plus-square"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="awardReceived" class="form-label">รางวัลที่ได้</label>
+                    <input type="text" class="form-control" id="awardReceived" required>
+                    <div class="invalid-feedback">กรุณากรอกรางวัลที่ได้รับ</div>
+                </div>
+                <div class="mb-3">
+                    <label for="awardActivity" class="form-label">กิจกรรม</label>
+                    <input type="text" class="form-control" id="awardActivity">
+                </div>
+                <div class="mb-3">
+                    <label for="awardOrganizer" class="form-label">หน่วยงาน</label>
+                    <input type="text" class="form-control" id="awardOrganizer">
+                </div>
+                <div class="mb-3">
+                    <label for="awardDate" class="form-label">วันที่จัด</label>
+                    <div class="input-group">
+                       <input type="text" id="awardDate" class="form-control datepicker" required placeholder="เลือกวันที่">
+                       <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="awardFile" class="form-label">ไฟล์แนบ (Image/PDF)</label>
+                    <input class="form-control" type="file" id="awardFile" accept="image/*,application/pdf" onchange="previewImage(event, 'award-file-preview')">
+                    <img id="award-file-preview" class="file-preview" src="#" alt="แสดงตัวอย่างไฟล์">
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="button" class="btn btn-primary" id="save-award-button">บันทึก</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="academicEventModal" tabindex="-1" aria-labelledby="academicEventModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="academicEventModalLabel">เพิ่ม/แก้ไขกิจกรรม</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="academicEventForm" class="needs-validation" novalidate>
+                <input type="hidden" id="academic-event-id">
+                <div class="mb-3">
+                    <label for="academicEventName" class="form-label">ชื่อกิจกรรม</label>
+                    <input type="text" class="form-control" id="academicEventName" required>
+                    <div class="invalid-feedback">กรุณากรอกชื่อกิจกรรม</div>
+                </div>
+                <div class="mb-3">
+                    <label for="academicEventDate" class="form-label">วันที่จัด</label>
+                     <div class="input-group">
+                        <input type="text" id="academicEventDate" class="form-control datepicker" required placeholder="เลือกวันที่">
+                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="academicEventResponsible" class="form-label">ผู้รับผิดชอบ</label>
+                    <input type="text" class="form-control" id="academicEventResponsible" required>
+                    <div class="invalid-feedback">กรุณากรอกผู้รับผิดชอบ</div>
+                </div>
+                <div class="mb-3">
+                    <label for="academicEventStatus" class="form-label">สถานะ</label>
+                    <select id="academicEventStatus" class="form-select" required>
+                        <option value="" selected>เลือกสถานะ...</option>
+                        <option>ยังไม่ดำเนินการ</option>
+                        <option>กำลังดำเนินการ</option>
+                        <option>เสร็จสิ้น</option>
+                        <option>ยกเลิก</option>
+                    </select>
+                    <div class="invalid-feedback">กรุณาเลือกสถานะ</div>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="button" class="btn btn-primary" id="save-academic-event-button">บันทึก</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="curriculumModal" tabindex="-1" aria-labelledby="curriculumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="curriculumModalLabel">เพิ่ม/แก้ไขข้อมูลหลักสูตร</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="curriculumForm" class="needs-validation" novalidate>
+                        <input type="hidden" id="curriculum-id">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="curriculum-employee-id" class="form-label">รหัสประจำตัว</label>
+                                <input type="text" id="curriculum-employee-id" class="form-control" readonly>
+                            </div>
+                            <div class="col-md-8">
+                                <label for="curriculum-employee-name" class="form-label">ชื่อ-สกุล</label>
+                                <input type="text" id="curriculum-employee-name" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                             <div class="col-md-6 mb-3">
+                                <label for="curriculumSemester" class="form-label">ภาคเรียนที่</label>
+                                <input type="text" class="form-control" id="curriculumSemester" required>
+                                <div class="invalid-feedback">กรุณากรอกภาคเรียน</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="curriculumCode" class="form-label">รหัสวิชา</label>
+                                <input type="text" class="form-control" id="curriculumCode" required>
+                                <div class="invalid-feedback">กรุณากรอกรหัสวิชา</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="curriculumName" class="form-label">ชื่อวิชา</label>
+                            <input type="text" class="form-control" id="curriculumName" required>
+                             <div class="invalid-feedback">กรุณากรอกชื่อวิชา</div>
+                        </div>
+                         <div class="mb-3">
+                            <label for="curriculumStatus" class="form-label">สถานะ</label>
+                            <select id="curriculumStatus" class="form-select" required>
+                                <option value="" selected>เลือกสถานะ...</option>
+                                <option>รออนุมัติ</option>
+                                <option>อนุมัติ</option>
+                                <option>ไม่อนุมัติ</option>
+                            </select>
+                            <div class="invalid-feedback">กรุณาเลือกสถานะ</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="curriculumFile" class="form-label">ไฟล์แนบ</label>
+                            <input class="form-control" type="file" id="curriculumFile">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary" id="save-curriculum-button">บันทึก</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="lessonPlanModal" tabindex="-1" aria-labelledby="lessonPlanModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="lessonPlanModalLabel">เพิ่ม/แก้ไขข้อมูลแผนการสอน</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="lessonPlanForm" class="needs-validation" novalidate>
+                        <input type="hidden" id="lesson-plan-id">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="lesson-plan-employee-id" class="form-label">รหัสประจำตัว</label>
+                                <input type="text" id="lesson-plan-employee-id" class="form-control" readonly>
+                            </div>
+                            <div class="col-md-8">
+                                <label for="lesson-plan-employee-name" class="form-label">ชื่อ-สกุล</label>
+                                <input type="text" id="lesson-plan-employee-name" class="form-control" readonly>
+                            </div>
+                        </div>
+                         <div class="row">
+                             <div class="col-md-6 mb-3">
+                                <label for="lessonPlanSemester" class="form-label">ภาคเรียนที่</label>
+                                <input type="text" class="form-control" id="lessonPlanSemester" required>
+                                 <div class="invalid-feedback">กรุณากรอกภาคเรียน</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="lessonPlanCode" class="form-label">รหัสวิชา</label>
+                                <input type="text" class="form-control" id="lessonPlanCode" required>
+                                 <div class="invalid-feedback">กรุณากรอกรหัสวิชา</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lessonPlanName" class="form-label">ชื่อวิชา</label>
+                            <input type="text" class="form-control" id="lessonPlanName" required>
+                             <div class="invalid-feedback">กรุณากรอกชื่อวิชา</div>
+                        </div>
+                         <div class="mb-3">
+                            <label for="lessonPlanStatus" class="form-label">สถานะ</label>
+                            <select id="lessonPlanStatus" class="form-select" required>
+                                <option value="" selected>เลือกสถานะ...</option>
+                                <option>รออนุมัติ</option>
+                                <option>อนุมัติ</option>
+                                <option>ไม่อนุมัติ</option>
+                            </select>
+                             <div class="invalid-feedback">กรุณาเลือกสถานะ</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lessonPlanFile" class="form-label">ไฟล์แนบ</label>
+                            <input class="form-control" type="file" id="lessonPlanFile">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary" id="save-lesson-plan-button">บันทึก</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="researchModal" tabindex="-1" aria-labelledby="researchModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="researchModalLabel">เพิ่ม/แก้ไขข้อมูลวิจัยในชั้นเรียน</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="researchForm" class="needs-validation" novalidate>
+                        <input type="hidden" id="research-id">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="research-employee-id" class="form-label">รหัสประจำตัว</label>
+                                <input type="text" id="research-employee-id" class="form-control" readonly>
+                            </div>
+                            <div class="col-md-8">
+                                <label for="research-employee-name" class="form-label">ชื่อ-สกุล</label>
+                                <input type="text" id="research-employee-name" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="researchSemester" class="form-label">ภาคเรียนที่</label>
+                                <input type="text" class="form-control" id="researchSemester" required>
+                                <div class="invalid-feedback">กรุณากรอกภาคเรียน</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                               <label for="researchSubject" class="form-label">รายวิชา</label>
+                               <input type="text" class="form-control" id="researchSubject" required>
+                                <div class="invalid-feedback">กรุณากรอกรายวิชา</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="researchTopic" class="form-label">เรื่อง</label>
+                            <input type="text" class="form-control" id="researchTopic" required>
+                            <div class="invalid-feedback">กรุณากรอกหัวข้อเรื่อง</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="researchStatus" class="form-label">สถานะ</label>
+                            <select id="researchStatus" class="form-select" required>
+                                <option value="" selected>เลือกสถานะ...</option>
+                                <option>รออนุมัติ</option>
+                                <option>อนุมัติ</option>
+                                <option>ไม่อนุมัติ</option>
+                            </select>
+                             <div class="invalid-feedback">กรุณาเลือกสถานะ</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="researchFile" class="form-label">ไฟล์แนบ</label>
+                            <input class="form-control" type="file" id="researchFile">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary" id="save-research-button">บันทึก</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="loading-overlay" style="display: none;">
         <img src="https://media1.giphy.com/media/mBMdeZHp6bqfkL4vBI/giphy.gif" alt="Loading...">
@@ -1393,6 +1926,8 @@
                 $('#profile-email').text(employeeData.email);
                 $('#profile-learningSubject').text(employeeData.learningSubject);
             }
+
+            // ... (All other original functions like DataTables setup, etc., would go here)
             
             setTimeout(() => {
                 hideLoadingOverlay();
